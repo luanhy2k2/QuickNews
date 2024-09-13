@@ -24,7 +24,7 @@ class GenericService implements IGenericService{
     }
     public function create($data){
         try{
-            $data->created_at = \Carbon\Carbon::now();
+            $data['created_at'] = \Carbon\Carbon::now();
             $data = $this->repo->create($data);
             if($data == null){
                 return new BaseCommandResponse("Thêm dữ liệu thành công", $data,false);
@@ -37,7 +37,7 @@ class GenericService implements IGenericService{
     }
     public function update($id, $data){
         try{
-            $data->updated_at = \Carbon\Carbon::now();
+            $data['updated_at'] = \Carbon\Carbon::now();
             $data = $this->repo->update($id,$data);
             if($data == null){
                 return new BaseCommandResponse("Cập nhật dữ liệu thành công", $data,false);
