@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 require base_path('routes/api/category.php');
 require base_path('routes/api/user.php');
+require base_path(('routes/api/tag.php'));
