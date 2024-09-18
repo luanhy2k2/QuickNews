@@ -11,6 +11,7 @@ class Category extends Model
     protected $table = 'categories';
     protected $fillable = [
         'name',
+        'describe',
         'updated_by'
     ];
     public function articles(){
