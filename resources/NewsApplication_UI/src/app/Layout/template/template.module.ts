@@ -9,11 +9,13 @@ import { ClientModule } from 'src/app/Modules/client/client.module';
 import { FormsModule } from '@angular/forms';
 import { AdminModule } from 'src/app/Modules/admin/admin.module';
 import { ClientTemplateComponent } from './client-template/client-template.component';
+import { AdminTemplateComponent } from './admin-template/admin-template.component';
 
 
 @NgModule({
   declarations: [
-    ClientTemplateComponent
+    ClientTemplateComponent,
+    AdminTemplateComponent
   ],
   imports: [
     TemplateRoutingModule,
