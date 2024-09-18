@@ -1,12 +1,12 @@
 <?php
 namespace App\Commons;
 class BaseCommandResponse{
-    public $Success;
-    public $Message;
-    public $Object;
+    public $success;
+    public $message;
+    public $object;
     public function __construct($Message = '', $Object = null,$Success = true) {
-        $this->Success = $Success;
-        $this->Message = $Message;
-        $this->Object = $Object;
+        $this->success = $Success;
+        $this->message = $Message;
+        $this->object = $Object;
     }
 }
