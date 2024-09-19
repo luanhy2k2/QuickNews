@@ -4,11 +4,13 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { CategoryComponent } from './category/category.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { UserArticleComponent } from './user-article/user-article.component';
 
 
 @NgModule({
   declarations: [
-    CategoryComponent
+    CategoryComponent,
+    UserArticleComponent
   ],
   imports: [
     CommonModule,

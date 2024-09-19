@@ -1,0 +1,63 @@
+<div style="margin-top: 40px;" class="header-contact text-center">
+  <h2>Đăng nhập</h2>
+</div>
+<div style="margin-bottom: 70px;" id="customer-login">
+  <div id="login" class="userbox">
+      <div class="accounttype">
+          <h2 class="title"></h2>
+      </div>
+      <div id="customer_login">
+          <input name="form_type" type="hidden" value="customer_login" />
+          <input name="utf8" type="hidden" value="✓" />
+          <div class="clearfix large_form">
+              <label for="customer_email" class="icon-field"><i class="fa fa-google"
+                      style="color: black;"></i></label>
+              <input [(ngModel)]="loginReq.username" required type="email" id="customer_email" placeholder="Email" class="text" />
+          </div>
+          <div class="clearfix large_form">
+              <label for="customer_password" class="icon-field"><i class="fa fa-lock"
+                      style="color: black;"></i></label>
+              <input [(ngModel)]="loginReq.password" required type="password" id="customer_password" placeholder="Mật khẩu"
+                  class="text" size="16" />
+          </div>
+          <div class="action_bottom">
+              <input (click)="login()" class="btn btn-signin" type="submit" value="Đăng nhập" />
+              <!-- <div *ngIf="isLoading">Đang đăng nhập...</div> -->
+          </div>
+          <div class="req_pass">
+              <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Quên mật khẩu?</a>
+              hoặc <a [routerLink]="['/client/signUp']" title="Đăng ký">Đăng ký</a>
+          </div>
+          <input id="b67806b848ae44668d5d1e66fd860c2a" name="g-recaptcha-response" type="hidden"
+              value="your-recaptcha-response" />
+      </div>
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <div class="accounttype">
+                      <h2>Phục hồi mật khẩu</h2>
+                  </div>
+
+              </div>
+              <div class="modal-body">
+                  <div>
+                      <label for="email" class="icon-field"><i style="color: black;" class="fa fa-google"></i></label>
+                      <input type="email" [(ngModel)] = "emailRecovery" size="30" name="email" placeholder="Email" id="recover-email"
+                          class="text" />
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      Huỷ
+                  </button>
+                  <button (click)="PasswordRecovery()" style="background-color: #fed700;" type="button" class="btn btn-primary">
+                      Gửi
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</div>

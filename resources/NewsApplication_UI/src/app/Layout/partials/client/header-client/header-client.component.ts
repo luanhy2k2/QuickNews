@@ -1,3 +1,4 @@
+import { AccountService } from 'src/app/Services/account.service';
 import { Component } from '@angular/core';
 import { Category } from 'src/app/Models/Category/category';
 import { BasePaging } from 'src/app/Models/Common/base-paging';
@@ -10,7 +11,7 @@ import { CategoryService } from 'src/app/Services/category.service';
   styleUrls: ['./header-client.component.scss']
 })
 export class HeaderClientComponent {
-  constructor(private readonly CategoryService:CategoryService){}
+  constructor(private readonly CategoryService:CategoryService, private readonly AccountService:AccountService){}
   category:BaseQuerieResponse<Category> = {
     pageIndex:1,
     pageSize:10,
@@ -19,8 +20,10 @@ export class HeaderClientComponent {
     keyword:""
   }
   currentDate: Date = new Date();
+  currentUserName:string = "";
   ngOnInit(){
     this.loadCategory();
+    this.currentUserName = this.AccountService.getCurentUser().name;
   }
   loadCategory(){
     var paging:BasePaging = {
@@ -32,5 +35,10 @@ export class HeaderClientComponent {
       this.category = res;
       console.log(res.item);
     })
+  }
+  logOut() {
+    localStorage.removeItem('user');
+    alert("Đăng xuất thành công");
+    this.currentUserName = "";
   }
 }

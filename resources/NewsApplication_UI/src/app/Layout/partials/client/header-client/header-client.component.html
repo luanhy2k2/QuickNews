@@ -9,6 +9,27 @@
                   <div class="fh5co_treding_position_absolute"></div>
               </div>
               <a href="./assets/#" class="color_fff fh5co_mediya_setting">Báo tiếng việt được cập nhật liên tục mọi lúc, mọi nơi</a>
+              <ul *ngIf='currentUserName != ""; else showLoginSignup' class="ht-menu">
+                <li>
+                    <a  [routerLink]="['/account']"
+                        class="currency-selector-wrapper">{{currentUserName}}</a>
+                </li>
+                <li>
+                    <a routerLink="" (click)="logOut()" class="currency-selector-wrapper">Đăng xuất</a>
+                </li>
+            </ul>
+            <ng-template #showLoginSignup>
+                <ul class="ht-menu">
+                    <li>
+                        <a routerLink='/login' class="currency-selector-wrapper">Đăng
+                            nhập</a>
+                    </li>
+                    <li>
+                        <a routerLink='/register' class="currency-selector-wrapper">Đăng
+                            kí</a>
+                    </li>
+                </ul>
+            </ng-template>
           </div>
       </div>
   </div>
@@ -17,7 +38,7 @@
   <div class="container">
       <div class="row">
           <div class="col-12 col-md-3 fh5co_padding_menu">
-              <img src="./assets/images/logo.png" alt="img" class="fh5co_logo_width"/>
+              <img routerLink="/" src="./assets/images/logo.png" alt="img" class="fh5co_logo_width"/>
           </div>
           <div class="col-12 col-md-9 align-self-center fh5co_mediya_right">
               <div class="text-center d-inline-block">
@@ -52,7 +73,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
-                      <a class="nav-link" href="./assets/index.html">Trang chủ <span class="sr-only">(current)</span></a>
+                      <a class="nav-link" routerLink="/">Trang chủ <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="./assets/#" id="dropdownMenuButton2" data-toggle="dropdown"

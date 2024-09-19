@@ -1,0 +1,71 @@
+<div class="main">
+  <div class="container">
+    <div class="title">Đăng kí</div>
+    <div class="content">
+      <form action="#">
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">Họ tên</span>
+            <input type="text" name="name" [(ngModel)]="User.name" placeholder="Nhập họ và tên..." required>
+          </div>
+          <div class="input-box">
+            <span class="details">Địa chỉ</span>
+            <input type="text" name="address" [(ngModel)]="User.address" placeholder="Nhập địa chỉ..." required>
+          </div>
+          <div class="input-box">
+            <span class="details">Ngày sinh</span>
+            <input type="datetime-local" name="birth" [(ngModel)]="User.birth"  required>
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            <input type="text" name="email" [(ngModel)]="User.email" placeholder="Nhập email..." required>
+          </div>
+          <div class="input-box">
+            <span class="details">Số điện thoại</span>
+            <input type="text" name="phone" [(ngModel)]="User.phone_number" placeholder="Nhập số điện thoại..." required>
+          </div>
+          <div class="input-box">
+            <span class="details">Tài khoản</span>
+            <input type="text" name="username" [(ngModel)]="User.username" placeholder="Nhập tài khoản..." required>
+          </div>
+          <div class="input-box">
+            <span class="details">Mật khẩu</span>
+            <input type="password" name="password" [(ngModel)]="User.password" placeholder="Nhập mật khẩu..." required>
+          </div>
+          <div class="input-box">
+            <span class="details">Xác nhận mật khẩu</span>
+            <input type="password" name="confirm" [(ngModel)]="User.confirmPassword" placeholder="Nhập mật khẩu xác nhận..." required>
+          </div>
+          <div class="input-box">
+            <span class="details">Ảnh đại diện</span>
+            <input style="border: none; margin-left: -15px;" type="file" name="avatar" accept="image/*" (change)="onFileChanged($event)" required>
+          </div>
+        </div>
+
+        <div class="gender-details">
+          <input type="radio" [(ngModel)]="User.gender" value="male" name="gender" id="dot-1">
+          <input type="radio" [(ngModel)]="User.gender" value="female" name="gender" id="dot-2">
+          <input type="radio" [(ngModel)]="User.gender" value="other" name="gender" id="dot-3">
+          <span class="gender-title">Gender</span>
+          <div class="category">
+            <label for="dot-1">
+            <span class="dot one"></span>
+            <span class="gender">Male</span>
+          </label>
+          <label for="dot-2">
+            <span class="dot two"></span>
+            <span class="gender">Female</span>
+          </label>
+          <label for="dot-3">
+            <span class="dot three"></span>
+            <span class="gender">Prefer not to say</span>
+            </label>
+          </div>
+        </div>
+        <div class="button">
+          <input (click)="register()" type="submit" value="Đăng kí">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
