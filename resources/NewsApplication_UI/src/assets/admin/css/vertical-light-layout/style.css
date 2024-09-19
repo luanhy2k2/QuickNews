@@ -9525,6 +9525,72 @@ progress {
     --bs-gutter-y: 3rem;
   }
 }
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-submit {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Tạo khoảng cách và kích thước cho các nút */
+.action-btn {
+  display: inline-flex; /* Đảm bảo biểu tượng căn giữa theo chiều dọc */
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px; /* Tăng kích thước padding để nút to hơn */
+  font-size: 18px; /* Kích thước biểu tượng */
+  border-radius: 5px; /* Bo góc mềm mại */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Hiệu ứng hover */
+}
+
+/* Hiệu ứng hover cho nút xóa (màu đỏ) */
+.btn-danger.action-btn:hover {
+  background-color: #d9534f; /* Màu đỏ đậm hơn */
+  transform: scale(1.05); /* Nút to lên một chút khi hover */
+}
+
+/* Hiệu ứng hover cho nút sửa (màu vàng) */
+.btn-warning.action-btn:hover {
+  background-color: #f0ad4e; /* Màu vàng đậm hơn */
+  transform: scale(1.05); /* Nút to lên một chút khi hover */
+}
+
+/* Tạo khoảng cách giữa các nút */
+.action-btn + .action-btn {
+  margin-left: 10px;
+}
+
 @media (min-width: 768px) {
   .col-md {
     flex: 1 0 0%;
@@ -10201,6 +10267,35 @@ progress {
     --bs-gutter-y: 3rem;
   }
 }
+
+.page-active {
+	color: white;
+	border: none;
+	border-radius: 3px;
+	background-color: rgb(231, 86, 50)
+}
+.padding-box {
+    margin-left: auto;
+    justify-content: center;
+    display: flex;
+    margin-top: 10px;
+}
+
+.padding-box .box-sum .box-right {
+    padding-left: 5px;
+}
+
+.padding-box .box-sum .box-right .page {
+    color: white;
+    border: none;
+    border-radius: 3px;
+    background-color: orange;
+}
+
+.padding-box .box-sum .box-right .page i {
+    margin-top: -8px;
+}
+
 .table, .jsgrid .jsgrid-table {
   --bs-table-color-type: initial;
   --bs-table-bg-type: initial;

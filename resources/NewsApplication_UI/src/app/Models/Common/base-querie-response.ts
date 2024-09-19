@@ -1,7 +1,7 @@
-export interface BaseQuerieResponse {
+export interface BaseQuerieResponse<T> {
   pageIndex:number,
   pageSize:number,
-  item:[],
+  item:T[],
   total:number,
   keyword:string
 }
