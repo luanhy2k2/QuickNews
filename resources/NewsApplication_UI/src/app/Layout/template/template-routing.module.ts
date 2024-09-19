@@ -7,15 +7,30 @@ const routes: Routes = [
   {
     path: '',
     component: ClientTemplateComponent,
-    loadChildren: () =>
-      import('../../Modules/client/client.module').then((x) => x.ClientModule),
+    children: [
+      {
+        path:'',
+        loadChildren: () =>
+          import('../../Modules/client/client.module').then(
+            (x) => x.ClientModule          ),
+      },
+
+    ],
   },
   {
-    path: 'admin',
+    path: '',
     component: AdminTemplateComponent,
-    loadChildren: () =>
-      import('../../Modules/admin/admin.module').then((x) => x.AdminModule),
-  },
+    children: [
+      {
+        path:'',
+        loadChildren: () =>
+          import('../../Modules/admin/admin.module').then(
+            (x) => x.AdminModule
+          ),
+      },
+
+    ],
+  }
 ];
 
 @NgModule({
