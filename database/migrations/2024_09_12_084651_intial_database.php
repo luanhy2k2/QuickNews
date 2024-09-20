@@ -25,15 +25,18 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->enum('appApproval', ['pending', 'accepted', 'rejected']);
+            $table->enum('approval', ['pending', 'accepted', 'rejected']);
             $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('updated_by');
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('category_id');
+
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
             $table->timestamps();
         });
+
 
         Schema::create('file_articles', function (Blueprint $table) {
             $table->id();

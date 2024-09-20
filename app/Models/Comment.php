@@ -13,6 +13,7 @@ class Comment extends Model
     protected $fillable = [
         'article_id',
         'content',
+        'approval',
         'created_by'
     ];
     /**

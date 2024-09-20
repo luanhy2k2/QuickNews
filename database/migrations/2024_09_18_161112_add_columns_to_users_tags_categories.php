@@ -24,9 +24,6 @@ class AddColumnsToUsersTagsCategories extends Migration
         Schema::table('categories', function (Blueprint $table) {
             $table->text('describe')->nullable();
         });
-        Schema::table('articles', function (Blueprint $table) {
-            $table->unsignedBigInteger('updated_by')->nullable()->change();
-        });
     }
 
     /**
