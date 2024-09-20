@@ -5,6 +5,7 @@ namespace App\Services\Eloquent;
 use App\Commons\BaseCommandResponse;
 use App\Repositories\Contracts\IUserRepository;
 use App\Services\Contracts\IUserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,9 +26,15 @@ class UserService extends GenericService implements IUserService
         $token = $user->createToken('authToken', ['role' => $user->role])->plainTextToken;
         return response()->json([
             'token' => $token,
-            'name' => $user->name,
+            'id' => $user->id,
             'role' => $user->role
         ], 200);
+    }
+    public function logout(Request $request)
+    {
+        $this->userRepo->deleteCurrentToken($request);
+
+        return ['message' => 'Đăng xuất thành công'];
     }
     public function create($data)
     {

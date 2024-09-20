@@ -9,10 +9,10 @@
                   <div class="fh5co_treding_position_absolute"></div>
               </div>
               <a href="./assets/#" class="color_fff fh5co_mediya_setting">Báo tiếng việt được cập nhật liên tục mọi lúc, mọi nơi</a>
-              <ul *ngIf='currentUserName != ""; else showLoginSignup' class="ht-menu">
+              <ul *ngIf='currentUser.name != ""; else showLoginSignup' class="ht-menu">
                 <li>
                     <a  [routerLink]="['/account']"
-                        class="currency-selector-wrapper">{{currentUserName}}</a>
+                        class="currency-selector-wrapper">{{currentUser.name}}</a>
                 </li>
                 <li>
                     <a routerLink="" (click)="logOut()" class="currency-selector-wrapper">Đăng xuất</a>

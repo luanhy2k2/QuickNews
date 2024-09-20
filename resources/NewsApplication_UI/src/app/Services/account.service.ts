@@ -2,19 +2,24 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { localhostApi } from '../Environments/env';
-import { Register } from '../Models/Account/register';
+import { Gender, Register } from '../Models/Account/register';
 import { BaseCommandResponse } from '../Models/Common/base-command-response';
-import { Auth } from '../Models/Account/account';
+import { Account, Auth } from '../Models/Account/account';
 import { Login } from '../Models/Account/login';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-
   constructor(private httpClient:HttpClient) { }
   login(loginReq:Login): Observable<any> {
     return this.httpClient.post<any>(`${localhostApi}/api/user/login`, loginReq)
+  }
+  logOut(): Observable<any> {
+    return this.httpClient.post<any>(`${localhostApi}/api/user/logout`, {})
+  }
+  getUserById(id:string):Observable<Account>{
+    return this.httpClient.get<Account>(`${localhostApi}/api/user/${id}`)
   }
   register(account: Register): Observable<BaseCommandResponse> {
     const formData: FormData = new FormData();
@@ -37,7 +42,7 @@ export class AccountService {
     } else {
         return {
             token: '',
-            name: '',
+            id: '',
             role: ''
         };
     }

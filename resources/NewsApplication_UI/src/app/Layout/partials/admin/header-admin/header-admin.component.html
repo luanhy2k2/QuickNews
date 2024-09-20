@@ -45,10 +45,10 @@
           aria-expanded="false"
         >
           <div class="nav-profile-img">
-            <img src="https://quicknew.s3.us-east-1.amazonaws.com/avatars/66ec6583859e8-lethihoa0779" alt="image" />
+            <img src="{{currentAccount.avatar}}" alt="image" />
           </div>
           <div class="nav-profile-text">
-            <p class="mb-1 text-black">Henry Klein</p>
+            <p class="mb-1 text-black">{{currentAccount.name}}</p>
           </div>
         </a>
         <div
@@ -105,7 +105,7 @@
               <span>Lock Account</span>
               <i class="mdi mdi-lock ms-1"></i>
             </a>
-            <a
+            <a (click)="logOut()"
               class="dropdown-item py-1 d-flex align-items-center justify-content-between"
               href="#"
             >

@@ -4,6 +4,7 @@ import { Category } from 'src/app/Models/Category/category';
 import { BasePaging } from 'src/app/Models/Common/base-paging';
 import { BaseQuerieResponse } from 'src/app/Models/Common/base-querie-response';
 import { CategoryService } from 'src/app/Services/category.service';
+import { SummaryAccount } from 'src/app/Models/Account/account';
 
 @Component({
   selector: 'app-header-client',
@@ -20,10 +21,17 @@ export class HeaderClientComponent {
     keyword:""
   }
   currentDate: Date = new Date();
-  currentUserName:string = "";
+  currentUser:SummaryAccount = {
+    name:"",
+    id:"",
+    avatar:""
+  }
   ngOnInit(){
     this.loadCategory();
-    this.currentUserName = this.AccountService.getCurentUser().name;
+    const currentUserid = this.AccountService.getCurentUser().id;
+    this.AccountService.getUserById(currentUserid).subscribe(res =>{
+      this.currentUser = res;
+    })
   }
   loadCategory(){
     var paging:BasePaging = {
@@ -37,8 +45,12 @@ export class HeaderClientComponent {
     })
   }
   logOut() {
-    localStorage.removeItem('user');
-    alert("Đăng xuất thành công");
-    this.currentUserName = "";
+    this.AccountService.logOut().subscribe(res =>{
+      localStorage.removeItem('user');
+      alert(res.message);
+      this.currentUser.name = "";
+      this.currentUser.id = "";
+      this.currentUser.avatar = "";
+    })
   }
 }

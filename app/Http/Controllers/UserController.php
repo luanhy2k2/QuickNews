@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     protected $userService;
-    public function __construct(IUserService $userService) {
+    public function __construct(IUserService $userService)
+    {
         $this->userService = $userService;
     }
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $validatedData = $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
@@ -21,7 +23,13 @@ class UserController extends Controller
         $token = $this->userService->login($validatedData);
         return response()->json($token);
     }
-    public function register(Request $request){
+    public function logout(Request $request)
+    {
+        $response = $this->userService->logout($request);
+        return response()->json($response, 200);
+    }
+    public function register(Request $request)
+    {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -36,6 +44,11 @@ class UserController extends Controller
         ]);
         $validatedData['role'] = Role::Client->value;
         $result = $this->userService->create($validatedData);
+        return response()->json($result);
+    }
+    public function getById($id)
+    {
+        $result = $this->userService->find($id);
         return response()->json($result);
     }
 }

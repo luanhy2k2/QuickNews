@@ -23,7 +23,7 @@ export class LoginComponent {
         }
          else {
           localStorage.setItem("user", JSON.stringify(res.original));
-          if (res.role == "client") {
+          if (res.original.role == "client") {
             window.location.href = "http://localhost:4200/";
           } else {
             window.location.href = "http://localhost:4200/category";
