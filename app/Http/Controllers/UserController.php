@@ -14,6 +14,23 @@ class UserController extends Controller
     {
         $this->userService = $userService;
     }
+    public function get(Request $request)
+    {
+        $pageIndex = $request->query('pageIndex', 1);
+        $pageSize = $request->query('pageSize', 10);
+        $keyword = $request->query('keyword', '');
+        $result = $this->userService->get($pageIndex, $pageSize, $keyword);
+        return response()->json($result);
+    }
+    public function getUserByRole(Request $request)
+    {
+        $pageIndex = $request->query('pageIndex', 1);
+        $pageSize = $request->query('pageSize', 10);
+        $keyword = $request->query('keyword', '');
+        $role = $request->route('role');
+        $result = $this->userService->getUserByRole($role,$pageIndex, $pageSize, $keyword);
+        return response()->json($result);
+    }
     public function login(Request $request)
     {
         $validatedData = $request->validate([
@@ -44,6 +61,21 @@ class UserController extends Controller
         ]);
         $validatedData['role'] = Role::Client->value;
         $result = $this->userService->create($validatedData);
+        return response()->json($result);
+    }
+    public function assignRoleToStaff(Request $request)
+    {
+        $validatedData = $request->validate([
+            'role' => 'required|string|in:Admin,Editor,Author,SupportStaff,Client',
+        ]);
+        $userId = $request->route('id');
+        $result = $this->userService->assignRoleToStaff($userId, $validatedData['role']);
+        return response()->json($result);
+    }
+    public function revokeRole(Request $request)
+    {
+        $userId = $request->route('id');
+        $result = $this->userService->revokeRole($userId);
         return response()->json($result);
     }
     public function getById($id)

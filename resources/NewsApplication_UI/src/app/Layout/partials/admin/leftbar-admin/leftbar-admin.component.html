@@ -92,6 +92,7 @@
     <li class="nav-item nav-category">Tài khoản
     <li class="nav-item">
       <a
+
         class="nav-link"
         data-bs-toggle="collapse"
         aria-expanded="false"
@@ -100,7 +101,21 @@
         <span class="icon-bg"
           ><i class="mdi mdi-chart-bar menu-icon"></i
         ></span>
-        <span class="menu-title">Biên tập viên</span>
+        <span [routerLink]="['/staff']" [queryParams]="{ role: role.Editor}" class="menu-title">Biên tập viên</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+
+        class="nav-link"
+        data-bs-toggle="collapse"
+        aria-expanded="false"
+        aria-controls="charts"
+      >
+        <span class="icon-bg"
+          ><i class="mdi mdi-chart-bar menu-icon"></i
+        ></span>
+        <span [routerLink]="['/staff']" [queryParams]="{ role: role.Author}" class="menu-title">Tác giả</span>
       </a>
     </li>
     <li class="nav-item">
@@ -113,7 +128,7 @@
         <span class="icon-bg"
           ><i class="mdi mdi-chart-bar menu-icon"></i
         ></span>
-        <span class="menu-title">Tác giả</span>
+        <span [routerLink]="['/staff']" [queryParams]="{ role: role.SupportStaff}" class="menu-title">Chăm sóc người dùng</span>
       </a>
     </li>
     <li class="nav-item">
@@ -126,20 +141,7 @@
         <span class="icon-bg"
           ><i class="mdi mdi-chart-bar menu-icon"></i
         ></span>
-        <span class="menu-title">Chăm sóc người dùng</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        data-bs-toggle="collapse"
-        aria-expanded="false"
-        aria-controls="charts"
-      >
-        <span class="icon-bg"
-          ><i class="mdi mdi-chart-bar menu-icon"></i
-        ></span>
-        <span class="menu-title">Người dùng</span>
+        <span [routerLink]="['/staff']" [queryParams]="{ role: role.Client}" class="menu-title">Người dùng</span>
       </a>
     </li>
 

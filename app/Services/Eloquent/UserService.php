@@ -3,6 +3,8 @@
 namespace App\Services\Eloquent;
 
 use App\Commons\BaseCommandResponse;
+use App\Commons\BaseQueryResponse;
+use App\Enums\Role;
 use App\Repositories\Contracts\IUserRepository;
 use App\Services\Contracts\IUserService;
 use Illuminate\Http\Request;
@@ -16,6 +18,22 @@ class UserService extends GenericService implements IUserService
     {
         parent::__construct($userRepo);
         $this->userRepo = $userRepo;
+    }
+    public function get(int $pageIndex, int $pageSize, string $keyword)
+    {
+        $condition = ['role' => $keyword];
+        $order = ['created_at' => 'desc'];
+        $data = $this->userRepo->get($pageIndex, $pageSize, $condition, $order);
+        return new BaseQueryResponse($pageIndex, $pageSize, $keyword, $data->items(), $data->total());
+    }
+    public function getUserByRole($role, $pageIndex, $pageSize, $keyword)
+    {
+        $query = $this->userRepo->getQueryable()->where('role', '=', $role);
+        if (!empty($keyword)) {
+            $query->where('name', 'like', '%' . $keyword . '%');
+        }
+        $result = $query->paginate($pageSize, ['*'], 'page', $pageIndex);
+        return new BaseQueryResponse($pageIndex,$pageSize,$keyword,$result->items(), $result->total());
     }
     public function login($data)
     {
@@ -38,7 +56,7 @@ class UserService extends GenericService implements IUserService
     }
     public function create($data)
     {
-        if($data['password'] != $data['confirmPassword']){
+        if ($data['password'] != $data['confirmPassword']) {
             return new BaseCommandResponse("Mật khẩu xác nhận không khớp", $data, false);
         }
         $file = $data['avatar'];
@@ -52,5 +70,29 @@ class UserService extends GenericService implements IUserService
         $data['avatar'] = $url;
         $result = $this->userRepo->create($data);
         return new BaseCommandResponse("Đăng kí tài khoản thành công", $result);
+    }
+    public function assignRoleToStaff($userId, $role)
+    {
+        $user = $this->userRepo->find($userId);
+        if ($user == null) {
+            return new BaseCommandResponse("Tài khoản không tồn tại!", $userId, false);
+        }
+        $user->role = $role;
+        if ($this->update($userId, ['role' => $role])) {
+            return new BaseCommandResponse("Cập nhật vai trò thành công!", $user);
+        }
+
+        return new BaseCommandResponse("Cập nhật vai trò không thành công!", $userId, false);
+    }
+    public function revokeRole($userId)
+    {
+        $user = $this->userRepo->find($userId);
+        if ($user == null) {
+            return new BaseCommandResponse("Tài khoản không tồn tại!", $userId, false);
+        }
+        if ($this->update($userId, ['role' => Role::Client->value])) {
+            return new BaseCommandResponse("Thu hồi quyền hạn thành công!", $user);
+        }
+        return new BaseCommandResponse("Thu hồi quyền hạn không thành công!", $userId, false);
     }
 }

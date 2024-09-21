@@ -19,9 +19,9 @@ export enum Role{
   Client = 'Client'
 }
 export interface SummaryAccount {
-  id:string,
-  name:string,
-  avatar:string
+  id:string | null,
+  name:string |null,
+  avatar:string | null
 }
 export interface Auth {
   token:string,

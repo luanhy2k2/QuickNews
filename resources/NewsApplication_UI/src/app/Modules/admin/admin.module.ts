@@ -7,12 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { UserArticleComponent } from './user-article/user-article.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TagComponent } from './tag/tag.component';
+import { StaffComponent } from './staff/staff.component';
 
 @NgModule({
   declarations: [
     CategoryComponent,
     UserArticleComponent,
-    TagComponent
+    TagComponent,
+    StaffComponent
   ],
   imports: [
     CommonModule,

@@ -48,9 +48,9 @@ export class HeaderClientComponent {
     this.AccountService.logOut().subscribe(res =>{
       localStorage.removeItem('user');
       alert(res.message);
-      this.currentUser.name = "";
-      this.currentUser.id = "";
-      this.currentUser.avatar = "";
+      this.currentUser.name = null;
+      this.currentUser.id = null;
+      this.currentUser.avatar = null;
     })
   }
 }
