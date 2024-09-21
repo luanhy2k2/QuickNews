@@ -27,7 +27,7 @@ class GenericService implements IGenericService{
             $data['created_at'] = \Carbon\Carbon::now();
             $data = $this->repo->create($data);
             if($data == null){
-                return new BaseCommandResponse("Thêm dữ liệu thành công", $data,false);
+                return new BaseCommandResponse("Thêm dữ liệu không thành công", $data,false);
             }
             return new BaseCommandResponse("Thêm dữ liệu thành công", $data);
         }

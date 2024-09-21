@@ -23,17 +23,23 @@ class CategoryController extends Controller
         return response()->json($result);
     }
     public function create(Request $request){
+        $userId = $request->attributes->get('user_id');
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'describe' => 'required|string|max:255'
         ]);
+        $validatedData['updated_by'] = $userId;
         $result = $this->categoryService->create($validatedData);
         return response()->json($result);
     }
     public function update(Request $request){
         $validatedData = $request->validate([
-            'id' => 'required|integer',
+            'id' => 'required|string',
             'name' => 'required|string|max:255',
+            'describe' => 'required|string|max:255'
         ]);
+        $userId = $request->attributes->get('userId');
+        $validatedData['updated_by'] = $userId;
         $result = $this->categoryService->update($validatedData['id'], $validatedData);
         return response()->json($result);
     }

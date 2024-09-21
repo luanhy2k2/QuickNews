@@ -24,17 +24,17 @@ class ArticleTagController extends Controller
     }
     public function create(Request $request){
         $validatedData = $request->validate([
-            'article_id' => 'required|integer',
-            'tag_id' => 'required|integer',
+            'article_id' => 'required|string',
+            'tag_id' => 'required|string',
         ]);
         $result = $this->service->create($validatedData);
         return response()->json($result);
     }
     public function update(Request $request){
         $validatedData = $request->validate([
-            'id' => 'required|integer',
-            'article_id' => 'required|integer',
-            'tag_id' => 'required|integer',
+            'id' => 'required|string',
+            'article_id' => 'required|string',
+            'tag_id' => 'required|string',
         ]);
         $result = $this->service->update($validatedData['id'], $validatedData);
         return response()->json($result);

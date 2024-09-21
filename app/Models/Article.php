@@ -15,7 +15,9 @@ class Article extends Model
         'content',
         'title',
         'approval',
+        'summary',
         'created_by',
+        'avatar',
         'updated_by'
     ];
     public function fileArticles(){
