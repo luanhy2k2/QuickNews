@@ -25,6 +25,7 @@ class TagController extends Controller
     public function create(Request $request){
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'describe' =>'required|string'
         ]);
         $result = $this->tagService->create($validatedData);
         return response()->json($result);
@@ -33,6 +34,7 @@ class TagController extends Controller
         $validatedData = $request->validate([
             'id' => 'required|integer',
             'name' => 'required|string|max:255',
+            'describe' =>'required|string'
         ]);
         $result = $this->tagService->update($validatedData['id'], $validatedData);
         return response()->json($result);
