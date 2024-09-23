@@ -4,6 +4,8 @@ namespace App\Services\Eloquent;
 
 use App\Commons\BaseCommandResponse;
 use App\Commons\BaseQueryResponse;
+use App\Enums\Approval;
+use App\Enums\Role;
 use App\Models\ArticleTag;
 use App\Models\FileArticle;
 use App\Repositories\Contracts\IArticleFileRepository;
@@ -36,6 +38,12 @@ class ArticleService extends GenericService implements IArticleService
     {
         try {
             $data['created_at'] = \Carbon\Carbon::now();
+            $role = auth()->user()->role;
+            if ($role == Role::Admin->value || $role == Role::Editor->value ) {
+                $data['approval'] = Approval::Accepted->value;
+            } else {
+                $data['approval'] = Approval::Pending->value;
+            }
             $article = $this->articleRepo->create($data);
             if (!$article) {
                 return new BaseCommandResponse("Thêm dữ liệu không thành công", $data, false);
@@ -43,7 +51,7 @@ class ArticleService extends GenericService implements IArticleService
             foreach ($data['articleTags'] as $item) {
                 $this->articleTagRepo->create([
                     'article_id' => $article->id,
-                    'tag_id' => $item['id'] 
+                    'tag_id' => $item['id']
                 ]);
             }
 
@@ -51,6 +59,19 @@ class ArticleService extends GenericService implements IArticleService
         } catch (\Exception $ex) {
             return new BaseCommandResponse("Đã xảy ra lỗi: " . $ex->getMessage(), $data, false);
         }
+    }
+    public function updateStatus($articleId, $approval)
+    {
+        $article = $this->articleRepo->find($articleId);
+        if ($article == null) {
+            return new BaseCommandResponse("Bài viết không tồn tại!", $articleId, false);
+        }
+        $article->approval = $approval;
+        if ($this->update($articleId, ['approval' => $approval])) {
+            return new BaseCommandResponse("Cập nhật trạng thái thành công!", $article);
+        }
+
+        return new BaseCommandResponse("Cập nhật trạng thái không thành công!", $article, false);
     }
 
     function update($id, $data)
@@ -122,10 +143,33 @@ class ArticleService extends GenericService implements IArticleService
         });
         return new BaseQueryResponse($pageIndex, $pageSize, $keyword, $articles, $result->total());
     }
+    public function mostPopular(int $pageIndex, int $pageSize)
+    {
+        $order = ['view' => 'desc'];
+        $data = $this->articleRepo->get($pageIndex, $pageSize, [], $order);
+        return new BaseQueryResponse($pageIndex, $pageSize, '', $data->items(), $data->total());
+    }
+
+    public function trending($pageIndex, $pageSize)
+    {
+        $query = $this->articleRepo->getQueryable()
+            ->where('created_at', '>=', \Carbon\Carbon::now()->subWeek())
+            ->orderBy('view', 'desc');
+        $result = $query->paginate($pageSize, ['*'], 'page', $pageIndex);
+        return new BaseQueryResponse($pageIndex, $pageSize, "", $result->items(), $result->total());
+    }
+    public function mostInteraction($pageIndex, $pageSize)
+    {
+        $query = $this->articleRepo->getQueryable()->withCount('comments')
+            ->orderBy('comments_count', 'desc');
+        $result = $query->paginate($pageSize, ['*'], 'page', $pageIndex);
+        return new BaseQueryResponse($pageIndex, $pageSize, "", $result->items(), $result->total());
+    }
     function find($id)
     {
         $article = $this->articleRepo->find($id);
         if ($article) {
+            $article->increment('view');
             return $this->mapArticle($article);
         }
         return null;
@@ -138,14 +182,16 @@ class ArticleService extends GenericService implements IArticleService
             'title' => $article->title,
             'content' => $article->content,
             'approval' => $article->approval,
+            'avatar' => $article->avatar,
             'created_by' => $article->createdBy->name,
             'updated_by' => $article->updatedBy->name ?? 'N/A',
             'summary' => $article->summary,
+            'view' =>$article->view,
             'category_name' => $article->category->name,
             'category_id' => $article->category->id,
             'created_at' => $article->created_at,
             'updated_at' => $article->updated_at,
-            'articleTags' => $this->mapArticleTags($article->articleTags) // Gọi hàm mapArticleTags để xử lý
+            'articleTags' => $this->mapArticleTags($article->articleTags)
         ];
     }
 

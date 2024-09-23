@@ -14,6 +14,7 @@ class Article extends Model
         'category_id',
         'content',
         'title',
+        'view',
         'approval',
         'summary',
         'created_by',
@@ -34,6 +35,10 @@ class Article extends Model
     }
     public function updatedBy():BelongsTo{
         return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'article_id');
     }
     public function ratings(){
         return $this->hasMany(Rating::class);

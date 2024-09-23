@@ -155,13 +155,13 @@
 	var goToTop = function() {
 
 		$('.js-gotop').on('click', function(event){
-			
+
 			event.preventDefault();
 
 			$('html, body').animate({
 				scrollTop: $('html').offset().top
 			}, 500, 'swing');
-			
+
 			return false;
 		});
 
@@ -175,10 +175,10 @@
 			}
 
 		});
-	
+
 	};
 
-	
+
 	$(function(){
 		owlCarousel();
 		videos();

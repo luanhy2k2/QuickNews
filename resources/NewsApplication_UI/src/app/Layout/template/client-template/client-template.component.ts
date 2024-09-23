@@ -14,8 +14,8 @@ export class ClientTemplateComponent {
     const styles = [
       './assets/css/media_query.css',
       './assets/css/bootstrap.css',
-      'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
       './assets/css/animate.css',
+      'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
       'https://fonts.googleapis.com/css?family=Poppins',
       './assets/css/owl.carousel.css',
       './assets/css/owl.theme.default.css',
@@ -33,13 +33,13 @@ export class ClientTemplateComponent {
   }
   public loadClientScripts() {
     const scripts = [
-      './assets/js/modernizr-3.5.0.min.js',
+      // './assets/js/modernizr-3.5.0.min.js',
       'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
-      './assets/js/owl.carousel.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js',
-      'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js',
-      './assets/js/jquery.waypoints.min.js',
-      './assets/js/main.js'
+      // './assets/js/owl.carousel.min.js',
+      // 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js',
+      // 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js',
+      // './assets/js/jquery.waypoints.min.js',
+      // './assets/js/main.js'
     ];
 
     scripts.forEach(scriptSrc => {

@@ -18,9 +18,39 @@ class ArticleController extends Controller
         $result = $this->articleService->get($pageIndex, $pageSize, $keyword);
         return response()->json($result) ;
     }
+    public function mostPopular(Request $request) {
+        $pageIndex = $request->query('pageIndex', 1);
+        $pageSize = $request->query('pageSize', 10);
+        $result = $this->articleService->mostPopular($pageIndex, $pageSize);
+        if ($result) {
+            return response()->json($result);
+        } else {
+            return response()->json(['message' => 'No articles found'], 404);
+        }
+    }
+
+    public function trending(Request $request){
+        $pageIndex = $request->query('pageIndex', 1);
+        $pageSize = $request->query('pageSize', 10);
+        $result = $this->articleService->trending($pageIndex, $pageSize);
+        return response()->json($result);
+    }
+    public function mostInteraction(Request $request){
+        $pageIndex = $request->query('pageIndex', 1);
+        $pageSize = $request->query('pageSize', 10);
+        $result = $this->articleService->mostInteraction($pageIndex, $pageSize);
+        return response()->json($result);
+    }
     public function find($id){
         $result = $this->articleService->find($id);
         return response()->json($result);
+    }
+    public function getByCategoryId(Request $request){
+        $pageIndex = $request->query('pageIndex', 1);
+        $pageSize = $request->query('pageSize', 10);
+        $keyword = $request->query('keyword', '');
+        $result = $this->articleService->getByCategoryId($keyword, $pageIndex, $pageSize);
+        return response()->json($result) ;
     }
     public function uploadFile(Request $request){
         $validatedData = $request->validate([
@@ -51,18 +81,26 @@ class ArticleController extends Controller
         $result = $this->articleService->create($validatedData);
         return response()->json($result);
     }
-    public function update(Request $request){
+    public function update(Request $request, $id) {
         $validatedData = $request->validate([
-            'id' => 'required|integer',
             'title' => 'required|string|max:255',
             'summary' => 'required|string',
             'content' => 'required|string',
             'category_id' => 'required|integer',
-            'approval' =>'required|string|in:pending,accepted,rejected',
+            'approval' => 'required|string|in:pending,accepted,rejected',
             'avatar' => 'nullable|string',
-            'articleTags' =>'required'
+            'articleTags' => 'required',
         ]);
-        $result = $this->articleService->update($validatedData['id'], $validatedData);
+        $result = $this->articleService->update($id, $validatedData);
+        return response()->json($result);
+    }
+    public function updateStatus(Request $request)
+    {
+        $validatedData = $request->validate([
+            'approval' => 'required|string|in:pending,accepted,rejected',
+        ]);
+        $articleId = $request->route('id');
+        $result = $this->articleService->updateStatus($articleId, $validatedData['approval']);
         return response()->json($result);
     }
     public function delete($id){

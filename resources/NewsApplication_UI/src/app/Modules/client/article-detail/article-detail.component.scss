@@ -1,3 +1,7 @@
+div[innerHTML] img {
+  width: 100%;
+  height: auto; /* Để giữ tỷ lệ khung hình */
+}
 .grid-item {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 item mỗi hàng trên laptop */

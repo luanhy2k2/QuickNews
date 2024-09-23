@@ -12,7 +12,7 @@ import { UpsertArticle } from '../Models/Article/upsert-article';
 })
 export class ArticleService {
   constructor(private http: HttpClient) { }
-  getArticle(paging:BasePaging): Observable<BaseQuerieResponse<Article>> {
+  getArticles(paging:BasePaging): Observable<BaseQuerieResponse<Article>> {
     let params = new HttpParams()
       .set('pageIndex', paging.pageIndex.toString())
       .set('pageSize', paging.pageSize.toString());
@@ -20,6 +20,33 @@ export class ArticleService {
       params = params.set('keyword', paging.keyword);
     }
     return this.http.get<BaseQuerieResponse<Article>>(`${localhostApi}/api/article`, { params });
+  }
+  getMostPopularArticles(paging:BasePaging): Observable<BaseQuerieResponse<Article>> {
+    let params = new HttpParams()
+      .set('pageIndex', paging.pageIndex.toString())
+      .set('pageSize', paging.pageSize.toString());
+    return this.http.get<BaseQuerieResponse<Article>>(`${localhostApi}/api/article/most-popular`, { params });
+  }
+  getTrendingArticles(paging:BasePaging): Observable<BaseQuerieResponse<Article>> {
+    let params = new HttpParams()
+      .set('pageIndex', paging.pageIndex.toString())
+      .set('pageSize', paging.pageSize.toString());
+    return this.http.get<BaseQuerieResponse<Article>>(`${localhostApi}/api/article/trending`, { params });
+  }
+  getMostInteractionArticles(paging:BasePaging): Observable<BaseQuerieResponse<Article>> {
+    let params = new HttpParams()
+      .set('pageIndex', paging.pageIndex.toString())
+      .set('pageSize', paging.pageSize.toString());
+    return this.http.get<BaseQuerieResponse<Article>>(`${localhostApi}/api/article/most-interaction`, { params });
+  }
+  getArticlesByCategoryId(paging:BasePaging): Observable<BaseQuerieResponse<Article>> {
+    let params = new HttpParams()
+      .set('pageIndex', paging.pageIndex.toString())
+      .set('pageSize', paging.pageSize.toString());
+    if (paging.keyword) {
+      params = params.set('keyword', paging.keyword);
+    }
+    return this.http.get<BaseQuerieResponse<Article>>(`${localhostApi}/api/article/getByCategoryId`, { params });
   }
   getArticleById(id: string): Observable<Article> {
     return this.http.get<Article>(`${localhostApi}/api/article/${id}`)
@@ -35,7 +62,7 @@ export class ArticleService {
     formData.append('file', File, File.name);
     return this.http.post<BaseCommandResponse>(`${localhostApi}/api/article/upload`, formData);
   }
-  update(Article: UpsertArticle): Observable<BaseCommandResponse> {
-    return this.http.put<BaseCommandResponse>(`${localhostApi}/api/article/update`, Article)
+  update(id:string, Article: UpsertArticle): Observable<BaseCommandResponse> {
+    return this.http.put<BaseCommandResponse>(`${localhostApi}/api/article/update/${id}`, Article)
   }
 }

@@ -5,6 +5,8 @@ import { FooterClientComponent } from './client/footer-client/footer-client.comp
 import { RouterModule } from '@angular/router';
 import { HeaderAdminComponent } from './admin/header-admin/header-admin.component';
 import { LeftbarAdminComponent } from './admin/leftbar-admin/leftbar-admin.component';
+import { FadeInRightComponent } from './client/fade-in-right/fade-in-right.component';
+
 
 
 
@@ -13,7 +15,9 @@ import { LeftbarAdminComponent } from './admin/leftbar-admin/leftbar-admin.compo
     HeaderClientComponent,
     FooterClientComponent,
     HeaderAdminComponent,
-    LeftbarAdminComponent
+    LeftbarAdminComponent,
+    FadeInRightComponent,
+
   ],
   imports: [
     CommonModule,
@@ -23,7 +27,8 @@ import { LeftbarAdminComponent } from './admin/leftbar-admin/leftbar-admin.compo
     HeaderClientComponent,
     FooterClientComponent,
     HeaderAdminComponent,
-    LeftbarAdminComponent
+    LeftbarAdminComponent,
+    FadeInRightComponent
   ]
 })
 export class PartialsModule { }

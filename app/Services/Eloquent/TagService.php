@@ -17,4 +17,9 @@ class TagService extends GenericService implements ITagService{
         $result = $this->tagRepo->get($pageIndex,$pageSize,$condition,[]);
         return new BaseQueryResponse($pageIndex,$pageSize,$keyword,$result->items(),$result->total());
     }
+    public function getAll()
+    {
+        $result = $this->tagRepo->getQueryable()->select('id', 'name')->get();
+        return $result;
+    }
 }

@@ -44,9 +44,31 @@ export class UserArticleComponent {
     total:0
   };
   public Editor = ClassicEditor;
+  public editorConfig = {
+    // Cấu hình plugin
+    toolbar: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      'link',
+      'imageUpload',
+      '|',
+      'undo',
+      'redo'
+    ],
+    image: {
+      toolbar: [
+        'imageTextAlternative',
+        '|',
+        'imageStyle:full',
+        'imageStyle:side'
+      ]
+    },
+    // Thêm các cấu hình khác nếu cần
+  };
   tottalPageArray: number[] = [];
   upsertArticleReq: UpsertArticle = {
-    id: '',
     title: '',
     summary: '',
     content: '',
@@ -55,6 +77,7 @@ export class UserArticleComponent {
     approval: Approval.Pending,
     avatar: '',
   };
+  idArticleSelected:string = "";
   avatarArticleReq: File = new File([''], '');
   onAvatarChanged(event: any) {
     this.avatarArticleReq = event.target.files[0];
@@ -71,12 +94,13 @@ export class UserArticleComponent {
       const file = files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        const imgElement = `<img src="${reader.result}" alt="Uploaded Image" />`;
-        this.upsertArticleReq.content += imgElement;
+        const imgHTML = `<img src="${reader.result}" class="uploaded-image" alt="Uploaded Image" />`;
+        this.upsertArticleReq.content += imgHTML;
       };
       reader.readAsDataURL(file);
     }
   }
+
   onReady(editor: any) {
     editor.plugins.get('FileRepository').createUploadAdapter = (
       loader: any
@@ -112,7 +136,7 @@ export class UserArticleComponent {
       if (avatar) {
         this.upsertArticleReq.avatar = avatar;
       }
-      this.ArticleService.update(this.upsertArticleReq).subscribe((res) => {
+      this.ArticleService.update(this.idArticleSelected,this.upsertArticleReq).subscribe((res) => {
         this.loadArticle();
         alert(res.message);
       });
@@ -152,13 +176,14 @@ export class UserArticleComponent {
       pageSize: this.Article.pageSize,
       keyword: this.Article.keyword,
     };
-    this.ArticleService.getArticle(paging).subscribe((res) => {
+    this.ArticleService.getArticles(paging).subscribe((res) => {
       var toatlPage = Math.ceil(res.total / res.pageSize);
       this.tottalPageArray = Array.from(
         { length: toatlPage },
         (_, index) => index + 1
       );
       this.Article = res;
+      console.log("ar", res)
     });
   }
   loadCategory() {
@@ -198,12 +223,10 @@ export class UserArticleComponent {
     this.Article.pageIndex = pageInDex;
     this.loadArticle();
   }
-  getArticleById(id: string) {
+  getArticleById(article: Article) {
     this.isModalCreate = false;
-    this.ArticleService.getArticleById(id).subscribe((res) => {
-      this.upsertArticleReq = res;
-      console.log("Request:", this.upsertArticleReq)
-    });
+    this.idArticleSelected = article.id;
+    this.upsertArticleReq = article;
   }
   delete(id: string) {
     const isConfirmed = confirm('Bạn có chắc muốn xoá không?');

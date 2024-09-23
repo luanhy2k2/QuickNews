@@ -21,6 +21,9 @@ export class TagService {
     }
     return this.http.get<BaseQuerieResponse<Tag>>(`${localhostApi}/api/tag`, { params });
   }
+  getAll(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(`${localhostApi}/api/tag/getAll`);
+  }
   getTagById(id: string): Observable<Tag> {
     return this.http.get<Tag>(`${localhostApi}/api/tag/${id}`)
   }

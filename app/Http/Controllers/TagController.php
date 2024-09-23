@@ -18,6 +18,10 @@ class TagController extends Controller
         $result = $this->tagService->get($pageIndex, $pageSize, $keyword);
         return response()->json($result) ;
     }
+    public function getAll(){
+        $result = $this->tagService->getAll();
+        return response()->json($result) ;
+    }
     public function find($id){
         $result = $this->tagService->find($id);
         return response()->json($result);

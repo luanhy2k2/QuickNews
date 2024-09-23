@@ -9,10 +9,12 @@ import localeVi from '@angular/common/locales/vi';
 import { registerLocaleData } from '@angular/common';
 import { AuthInterceptor } from './Interceptor/auth-interceptor.service';
 
+
 registerLocaleData(localeVi,'vi');
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
+
   ],
   imports: [
     BrowserModule,
